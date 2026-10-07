@@ -159,7 +159,7 @@ export const ClientBookingFlow: React.FC = () => {
       <div className="relative border-b border-stone-800 bg-stone-900/40">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
-            src="/src/assets/images/hero_barbearia_pedro_1791388778185.jpg"
+            src="/images/hero_barbearia_pedro_1791388778185.jpg"
             alt="Interior Barbearia D. Pedro V"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover opacity-20 filter contrast-125"
