@@ -34,7 +34,7 @@ export const INITIAL_SERVICES: Service[] = [
   },
   {
     id: 'srv-combo-completo',
-    name: 'Combo D. Pedro V (Corte + Barba)',
+    name: 'Combo Completo (Corte + Barba)',
     category: 'combo',
     price: 24.0,
     durationMin: 60,
@@ -74,7 +74,7 @@ export const INITIAL_SERVICES: Service[] = [
 export const INITIAL_BARBERS: Barber[] = [
   {
     id: 'barber-pedro',
-    name: 'Pedro (Mestre Barbeiro & Dono)',
+    name: 'João (Mestre Barbeiro)',
     role: 'Fundador & Master Barber',
     bio: 'Mais de 12 anos de experiência na arte da barbearia tradicional e cortes contemporâneos.',
     photoUrl: '/src/assets/images/barber_pedro_avatar_1791388790367.jpg',
@@ -132,14 +132,14 @@ export const INITIAL_BARBERS: Barber[] = [
 ];
 
 export const INITIAL_CONFIG: BarbershopConfig = {
-  name: 'Barbearia D. Pedro V',
-  subtitle: 'Cortes autênticos, barbearia clássica e ambiente de respeito.',
-  instagramHandle: 'barbearia_d.pedro_v',
-  instagramUrl: 'https://www.instagram.com/barbearia_d.pedro_v?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==',
+  name: 'Barbearia Exemplo',
+  subtitle: 'Demonstração de sistema de agendamento e gestão',
+  instagramHandle: 'barbearia_exemplo',
+  instagramUrl: 'https://www.instagram.com/barbearia_exemplo',
   phone: '+351 912 345 678',
-  address: 'Rua Dom Pedro V, nº 42',
-  city: 'Lisboa',
-  postalCode: '1250-093',
+  address: 'Rua Exemplo, nº 10',
+  city: 'Braga',
+  postalCode: '4700-000',
   openingHours: {
     weekdays: '09:00 - 19:30',
     saturday: '09:00 - 19:00',
@@ -148,7 +148,7 @@ export const INITIAL_CONFIG: BarbershopConfig = {
   slotIntervalMin: 30,
   autoRemindersEnabled: true,
   reminderHoursBefore: 24,
-  whatsappMessageTemplate: 'Olá {cliente}! Lembramos a sua marcação na Barbearia D. Pedro V para dia {data} às {hora} com o barbeiro {barbeiro}. Responda para confirmar!',
+  whatsappMessageTemplate: 'Olá {cliente}! Lembramos a sua marcação na Barbearia Exemplo para dia {data} às {hora} com o barbeiro {barbeiro}. Responda para confirmar!',
 };
 
 export const INITIAL_CLIENTS: ClientProfile[] = [
