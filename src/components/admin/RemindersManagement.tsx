@@ -81,13 +81,13 @@ export const RemindersManagement: React.FC = () => {
           <div>
             <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
               <ShieldCheck className="w-4 h-4" />
-              <span>Redução Ativa de Faltas (No-Show Protection)</span>
+              <span>Menos faltas com lembretes</span>
             </div>
             <h2 className="font-display text-2xl font-bold text-white">
-              Sistema de Lembretes Automáticos por WhatsApp & SMS
+              Lembretes por WhatsApp com um toque
             </h2>
             <p className="text-stone-300 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
-              O principal motivo para clientes faltarem a cortes de cabelo é o esquecimento. Este módulo envia notificações automáticas 24h e 2h antes da hora, garantindo a cadeira sempre ocupada e receita garantida.
+              O principal motivo para clientes faltarem a cortes de cabelo é o esquecimento. Este módulo prepara a mensagem de lembrete pronta a enviar por WhatsApp, com um toque por cliente, para as marcações de hoje e de amanhã.
             </p>
           </div>
 
@@ -99,7 +99,7 @@ export const RemindersManagement: React.FC = () => {
             >
               <Send className="w-4 h-4" />
               <span>
-                Disparar Todos os Lembretes Pendentes ({pendingReminders.length})
+                Marcar todos como enviados ({pendingReminders.length})
               </span>
             </button>
           </div>
@@ -108,13 +108,13 @@ export const RemindersManagement: React.FC = () => {
         {/* Metrics Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6 pt-6 border-t border-stone-800">
           <div className="bg-stone-950/70 p-3.5 rounded-xl border border-stone-800/80">
-            <span className="text-[11px] text-stone-400 block uppercase font-medium">Taxa de Assiduidade</span>
+            <span className="text-[11px] text-stone-400 block uppercase font-medium">Taxa de Assiduidade (exemplo)</span>
             <span className="text-xl font-mono font-bold text-emerald-400">96.4%</span>
             <span className="text-[10px] text-stone-500 block mt-0.5">+4.2% vs mês anterior</span>
           </div>
 
           <div className="bg-stone-950/70 p-3.5 rounded-xl border border-stone-800/80">
-            <span className="text-[11px] text-stone-400 block uppercase font-medium">Faltas Evitadas</span>
+            <span className="text-[11px] text-stone-400 block uppercase font-medium">Faltas Evitadas (exemplo)</span>
             <span className="text-xl font-mono font-bold text-amber-400">22 este mês</span>
             <span className="text-[10px] text-stone-500 block mt-0.5">~€410 em cortes protegidos</span>
           </div>
@@ -284,7 +284,7 @@ export const RemindersManagement: React.FC = () => {
         <div className="mb-4">
           <h3 className="font-display text-base font-bold text-white flex items-center gap-2">
             <MessageSquare className="w-4 h-4 text-emerald-400" />
-            <span>Modelo de Mensagem de Lembrete Automático</span>
+            <span>Modelo de Mensagem de Lembrete</span>
           </h3>
           <p className="text-xs text-stone-400 mt-0.5">
             Personalize a mensagem enviada aos clientes. Variáveis disponíveis: <code className="text-amber-400 font-mono">{'{cliente}'}</code>, <code className="text-amber-400 font-mono">{'{data}'}</code>, <code className="text-amber-400 font-mono">{'{hora}'}</code>, <code className="text-amber-400 font-mono">{'{barbeiro}'}</code>.

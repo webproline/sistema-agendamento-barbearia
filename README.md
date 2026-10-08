@@ -1,20 +1,28 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Sistema de agendamento e gestão para barbearias — demonstração
 
-# Run and deploy your AI Studio app
+Demonstração com **dados fictícios** de uma plataforma de marcações para barbearias:
+marcação online para o cliente, agenda e gestão para o barbeiro (PC e telemóvel),
+clientes, equipa, serviços, lembretes por WhatsApp e análises.
 
-This contains everything you need to run your app locally.
+> Os dados ficam guardados apenas no browser (localStorage). Não há base de dados
+> nem login: é uma demonstração de interface, não um sistema em produção.
 
-View your app in AI Studio: https://ai.studio/apps/f396e45b-6dce-43b0-bd52-19aa8d4f4e47
+## Antes de enviar a demo
 
-## Run Locally
+Edita `src/data/contact.ts` e preenche `whatsapp` e/ou `email`. Enquanto estiverem
+vazios, o botão "Quero isto na minha barbearia" não aparece.
 
-**Prerequisites:**  Node.js
+`DEMO_MODE = true` impede que as mensagens de WhatsApp sigam para números de exemplo.
 
+## Correr localmente
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm install
+npm run dev
+```
+
+## Ficheiros úteis
+
+- `src/data/initialData.ts` — dados de exemplo (barbearia, serviços, barbeiros, clientes)
+- `src/data/contact.ts` — o teu contacto e o modo demonstração
+- `src/utils/calendar.ts` — mensagens de WhatsApp e ficheiro de calendário

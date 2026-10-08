@@ -13,6 +13,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { ClientProfile } from '../../types/barbershop';
+import { getWhatsAppUrl } from '../../utils/calendar';
 
 export const ClientsCRM: React.FC = () => {
   const { clients, updateClientNotes, barbers, appointments } = useBarbershop();
@@ -147,7 +148,7 @@ export const ClientsCRM: React.FC = () => {
 
               <div className="flex items-center gap-2">
                 <a
-                  href={`https://wa.me/351${selectedClient.phone.replace(/\D/g, '')}`}
+                  href={getWhatsAppUrl(selectedClient.phone, 'Olá!')}
                   target="_blank"
                   rel="noreferrer"
                   className="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition-all"

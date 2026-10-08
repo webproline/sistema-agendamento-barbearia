@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { BarbershopProvider, useBarbershop } from './context/BarbershopContext';
 import { Header } from './components/common/Header';
+import { DemoBanner } from './components/common/DemoBanner';
+import { getContactUrl } from './data/contact';
 import { ClientBookingFlow } from './components/client/ClientBookingFlow';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { QuickBookingModal } from './components/admin/QuickBookingModal';
@@ -14,14 +16,18 @@ import {
   Scissors,
   CheckCircle2,
   ExternalLink,
+  MessageCircle,
 } from 'lucide-react';
 
 const MainContent: React.FC = () => {
   const { activeView, setActiveView, config } = useBarbershop();
   const [isQuickBookingOpen, setIsQuickBookingOpen] = useState(false);
+  const contactUrl = getContactUrl();
 
   return (
     <div className="min-h-screen flex flex-col bg-stone-950 text-stone-100 selection:bg-amber-500 selection:text-black">
+      <DemoBanner />
+
       {/* Top Header */}
       <Header onOpenQuickBooking={() => setIsQuickBookingOpen(true)} />
 
@@ -104,8 +110,19 @@ const MainContent: React.FC = () => {
             </a>
           </div>
 
-          <div className="text-[11px] text-stone-600">
-            Sistema de Agendamento Autónomo & Gestão Integrada
+          <div className="flex flex-col items-center md:items-end gap-2 text-[11px] text-stone-500">
+            <span>Demonstração · Sistema de agendamento e gestão para barbearias</span>
+            {contactUrl && (
+              <a
+                href={contactUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs transition-colors"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                Quero isto na minha barbearia
+              </a>
+            )}
           </div>
         </div>
       </footer>

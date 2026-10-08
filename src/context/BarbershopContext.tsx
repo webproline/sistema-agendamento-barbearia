@@ -23,6 +23,7 @@ import {
   minutesToTime,
   getWhatsAppReminderUrl,
 } from '../utils/calendar';
+import { DEMO_MODE } from '../data/contact';
 
 interface ToastMessage {
   id: string;
@@ -369,13 +370,13 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     if (!app) return { success: false };
 
     const barber = barbers.find(b => b.id === app.barberId);
-    const barberName = barber ? barber.name : 'Barbearia D. Pedro V';
+    const barberName = barber ? barber.name : config.name;
     const srvNames = services
       .filter(s => app.serviceIds.includes(s.id))
       .map(s => s.name)
       .join(', ');
 
-    const waUrl = getWhatsAppReminderUrl(app, barberName, srvNames, config.phone);
+    const waUrl = getWhatsAppReminderUrl(app, barberName, srvNames, config.phone, config.name);
 
     // Update appointment reminder status
     setAppointments(prev =>
@@ -392,8 +393,10 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
     addToast({
       type: 'success',
-      title: 'Lembrete Enviado!',
-      description: `Mensagem enviada com sucesso para ${app.clientName} (${app.clientPhone}).`,
+      title: 'Mensagem de lembrete pronta',
+      description: DEMO_MODE
+        ? 'Em modo demonstração nada é enviado. Escolha um contacto no WhatsApp para ver a mensagem.'
+        : `Mensagem preparada para ${app.clientName}. Carregue em enviar no WhatsApp para concluir.`,
     });
 
     if (method === 'whatsapp') {
@@ -436,8 +439,8 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
     addToast({
       type: 'success',
-      title: `${pending.length} Lembretes Disparados`,
-      description: `Lembretes automáticos enviados para todos os agendamentos das próximas 24h.`,
+      title: `${pending.length} lembretes marcados como enviados`,
+      description: 'Apenas atualiza o estado: os lembretes são enviados um a um por WhatsApp.',
     });
 
     return pending.length;

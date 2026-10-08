@@ -87,7 +87,7 @@ export const AnalyticsView: React.FC = () => {
             </span>
           </div>
           <p className="text-xs text-stone-400 mt-1">
-            Muito baixa graças aos lembretes automáticos
+            Valor calculado com dados de exemplo (demonstração)
           </p>
         </div>
 

@@ -1,4 +1,5 @@
 import { Appointment, Barber, Service } from '../types/barbershop';
+import { DEMO_MODE } from '../data/contact';
 
 export function formatDatePT(dateStr: string): string {
   if (!dateStr) return '';
@@ -56,19 +57,30 @@ export function minutesToTime(minutes: number): string {
   return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
 }
 
+// Constrói um link wa.me.
+// Em modo demonstração não usa números reais (podiam pertencer a pessoas verdadeiras):
+// o WhatsApp abre com a mensagem pronta e a pessoa escolhe o destinatário.
+export function getWhatsAppUrl(phone: string, message?: string): string {
+  const digits = phone.replace(/\D/g, '');
+  const normalized = digits.length === 9 ? `351${digits}` : digits;
+  const base = !DEMO_MODE && normalized ? `https://wa.me/${normalized}` : 'https://wa.me/';
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
 // Generate WhatsApp reminder link
 export function getWhatsAppReminderUrl(
   appointment: Appointment,
   barberName: string,
   servicesNames: string,
-  shopPhone: string
+  shopPhone: string,
+  shopName: string = 'Barbearia'
 ): string {
   const cleanPhone = appointment.clientPhone.replace(/\D/g, '');
   // Format for Portugal if 9 digits: add 351
   const destinationPhone = cleanPhone.length === 9 ? `351${cleanPhone}` : cleanPhone;
 
   const dateFormatted = formatDatePT(appointment.date);
-  const message = `💈 *Barbearia D. Pedro V* 💈
+  const message = `💈 *${shopName}* 💈
 Olá ${appointment.clientName}! 
 
 Lembramos a sua marcação:
@@ -76,13 +88,13 @@ Lembramos a sua marcação:
 ⏰ *Hora:* ${appointment.time}
 ✂️ *Serviço(s):* ${servicesNames}
 👤 *Barbeiro:* ${barberName}
-📍 *Local:* Barbearia D. Pedro V
+📍 *Local:* ${shopName}
 
 Por favor, responda *CONFIRMAR* para garantir o seu horário ou avise com antecedência se necessitar reagendar.
 
 Agradecemos a sua preferência e até breve!`;
 
-  return `https://wa.me/${destinationPhone}?text=${encodeURIComponent(message)}`;
+  return getWhatsAppUrl(destinationPhone, message);
 }
 
 // Generate client WhatsApp confirmation link (to send to barbershop directly)
@@ -90,13 +102,14 @@ export function getClientWhatsAppConfirmationUrl(
   appointment: Appointment,
   barberName: string,
   servicesNames: string,
-  shopPhone: string
+  shopPhone: string,
+  shopName: string = 'Barbearia'
 ): string {
   const cleanPhone = shopPhone.replace(/\D/g, '');
   const destinationPhone = cleanPhone.length === 9 ? `351${cleanPhone}` : cleanPhone;
 
   const dateFormatted = formatDatePT(appointment.date);
-  const message = `Olá! Acabei de marcar pelo site na *Barbearia D. Pedro V*:
+  const message = `Olá! Acabei de marcar pelo site na *${shopName}*:
 🎟️ *Código:* ${appointment.id}
 👤 *Nome:* ${appointment.clientName}
 📱 *Contacto:* ${appointment.clientPhone}
@@ -107,14 +120,15 @@ export function getClientWhatsAppConfirmationUrl(
 
 Confirmam a receção? Obrigado!`;
 
-  return `https://wa.me/${destinationPhone}?text=${encodeURIComponent(message)}`;
+  return getWhatsAppUrl(destinationPhone, message);
 }
 
 // Generate .ics file download for calendar apps (Apple, Google, Outlook)
 export function downloadICSFile(
   appointment: Appointment,
   barber: Barber,
-  services: Service[]
+  services: Service[],
+  shopName: string = 'Barbearia'
 ): void {
   const [year, month, day] = appointment.date.split('-').map(Number);
   const [hours, minutes] = appointment.time.split(':').map(Number);
@@ -131,16 +145,16 @@ export function downloadICSFile(
   const icsContent = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Barbearia D. Pedro V//Agendamento//PT',
+    `PRODID:-//${shopName}//Agendamento//PT`,
     'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
-    `UID:${appointment.id}@barbeariadpedrov.pt`,
+    `UID:${appointment.id}@agendamento.demo`,
     `DTSTAMP:${formatICSDate(new Date())}`,
     `DTSTART:${formatICSDate(startDate)}`,
     `DTEND:${formatICSDate(endDate)}`,
-    `SUMMARY:Corte na Barbearia D. Pedro V (${serviceNames})`,
+    `SUMMARY:Corte na ${shopName} (${serviceNames})`,
     `DESCRIPTION:Marcação com o barbeiro ${barber.name}. Código da reserva: ${appointment.id}. Serviços: ${serviceNames}.`,
-    `LOCATION:Barbearia D. Pedro V`,
+    `LOCATION:${shopName}`,
     'STATUS:CONFIRMED',
     'END:VEVENT',
     'END:VCALENDAR',

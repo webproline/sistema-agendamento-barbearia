@@ -1,6 +1,8 @@
 {
-  "name": "Barbearia D. Pedro V - Sistema de Agendamento e Gestão",
-  "description": "Plataforma completa de agendamento online e gestão operacional para a Barbearia D. Pedro V. Marcação autónoma de serviços, agenda centralizada para PC e telemóvel, e lembretes automáticos para redução de faltas.",
+  "name": "Sistema de Agendamento e Gestão para Barbearias - Demonstração",
+  "description": "Demonstração com dados fictícios de uma plataforma de agendamento online e gestão para barbearias: marcação autónoma de serviços, agenda para PC e telemóvel e mensagens de lembrete prontas a enviar por WhatsApp.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

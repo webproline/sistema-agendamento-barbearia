@@ -72,7 +72,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
                   {config.name}
                 </span>
                 <span className="text-[11px] text-stone-400 hidden sm:block tracking-wide">
-                  Tradição & Estilo · Lisboa
+                  Tradição & Estilo · {config.city}
                 </span>
               </div>
             </button>
@@ -121,7 +121,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
               href={config.instagramUrl}
               target="_blank"
               rel="noreferrer"
-              title="Instagram Oficial @barbearia_d.pedro_v"
+              title={`Instagram @${config.instagramHandle}`}
               className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-stone-300 hover:text-white bg-stone-900/80 hover:bg-stone-800 border border-stone-800 rounded-lg transition-colors whitespace-nowrap"
             >
               <Instagram className="w-3.5 h-3.5 text-pink-400" />

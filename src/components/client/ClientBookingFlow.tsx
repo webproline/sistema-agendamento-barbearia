@@ -159,8 +159,8 @@ export const ClientBookingFlow: React.FC = () => {
       <div className="relative border-b border-stone-800 bg-stone-900/40">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
-            src="/images/hero_barbearia_pedro_1791388778185.jpg"
-            alt="Interior Barbearia D. Pedro V"
+            src="/images/hero_barbearia.jpg"
+            alt="Interior da barbearia"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover opacity-20 filter contrast-125"
           />
@@ -191,7 +191,7 @@ export const ClientBookingFlow: React.FC = () => {
             <span aria-hidden="true" className="text-stone-600">·</span>
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Lembretes Automáticos por WhatsApp
+              Confirmação por WhatsApp
             </span>
           </div>
         </div>
@@ -610,7 +610,7 @@ export const ClientBookingFlow: React.FC = () => {
                 Finalizar Marcação
               </h2>
               <p className="text-xs sm:text-sm text-stone-400 mt-1">
-                Introduza os seus dados para receber a confirmação e o lembrete automático
+                Introduza os seus dados para receber a confirmação da marcação
               </p>
             </div>
 
@@ -839,7 +839,7 @@ export const ClientBookingFlow: React.FC = () => {
               <div className="bg-stone-900/60 p-3 rounded-xl border border-stone-800/60 text-xs text-stone-400 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
                 <span>
-                  <strong>Lembrete Ativo:</strong> Receberá uma notificação no WhatsApp no próprio dia com o resumo do corte.
+                  <strong>Confirmação:</strong> envie a confirmação à barbearia por WhatsApp e guarde a marcação no seu calendário.
                 </span>
               </div>
             </div>
@@ -851,7 +851,8 @@ export const ClientBookingFlow: React.FC = () => {
                   confirmedBooking,
                   selectedBarber.name,
                   selectedServices.map(s => s.name).join(' + '),
-                  config.phone
+                  config.phone,
+                  config.name
                 )}
                 target="_blank"
                 rel="noreferrer"
@@ -862,7 +863,7 @@ export const ClientBookingFlow: React.FC = () => {
               </a>
 
               <button
-                onClick={() => downloadICSFile(confirmedBooking, selectedBarber, selectedServices)}
+                onClick={() => downloadICSFile(confirmedBooking, selectedBarber, selectedServices, config.name)}
                 className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-stone-800 hover:bg-stone-700 text-stone-200 font-semibold rounded-xl border border-stone-700 transition-all text-sm"
               >
                 <CalendarCheck className="w-4 h-4 text-amber-400" />
