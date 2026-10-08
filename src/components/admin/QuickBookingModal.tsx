@@ -121,7 +121,7 @@ export const QuickBookingModal: React.FC<QuickBookingModalProps> = ({
                     : 'bg-stone-950 border-stone-800 text-stone-400 hover:bg-stone-850'
                 }`}
               >
-                🚶 Presencial (Balcão / Walk-in)
+                🚶 Presencial (Balcão)
               </button>
             </div>
           </div>

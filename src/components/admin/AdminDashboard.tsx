@@ -62,10 +62,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div>
           <div className="flex items-center gap-2 text-xs text-amber-500 font-semibold uppercase tracking-wider mb-1">
             <Monitor className="w-3.5 h-3.5" />
-            <span>Painel Central da Barbearia · PC & Balcão</span>
+            <span>Painel Central da Barbearia · Balcão</span>
           </div>
           <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
-            Gestão Operacional de Agendamentos
+            Gestão de Agendamentos
           </h1>
         </div>
 
@@ -97,7 +97,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           }`}
         >
           <Calendar className="w-4 h-4" />
-          <span>Agenda Diária (PC)</span>
+          <span>Agenda Diária (Balcão)</span>
         </button>
 
         <button
@@ -109,7 +109,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           }`}
         >
           <BellRing className="w-4 h-4" />
-          <span>Lembretes & Anti-Faltas</span>
+          <span>Lembretes</span>
           {pendingRemindersCount > 0 && (
             <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${
               adminTab === 'reminders'
@@ -130,7 +130,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           }`}
         >
           <Users className="w-4 h-4" />
-          <span>Ficha de Clientes (CRM)</span>
+          <span>Ficha de Clientes</span>
         </button>
 
         <button

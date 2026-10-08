@@ -139,7 +139,7 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
                 : 'text-stone-400 hover:text-stone-200'
             }`}
           >
-            Grelha por Barbeiro (PC)
+            Grelha por Barbeiro
           </button>
           <button
             onClick={() => setViewMode('list')}
