@@ -45,7 +45,7 @@ const MainContent: React.FC = () => {
 
       {/* Persistent floating switcher helper for presentation */}
       <div className="fixed bottom-4 left-4 z-40 hidden sm:flex items-center gap-2 bg-stone-900/90 backdrop-blur-md p-1.5 rounded-2xl border border-stone-800 shadow-2xl">
-        <span className="text-[11px] font-medium text-stone-400 pl-2">Modo Atual:</span>
+        <span className="text-[11px] font-medium text-stone-400 pl-2">Pré-visualização:</span>
         <button
           onClick={() => setActiveView('client')}
           className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
@@ -111,7 +111,7 @@ const MainContent: React.FC = () => {
           </div>
 
           <div className="flex flex-col items-center md:items-end gap-2 text-[11px] text-stone-500">
-            <span>Demonstração · Sistema de agendamento e gestão para barbearias</span>
+            <span>Demonstração do sistema de marcações e gestão</span>
             {contactUrl && (
               <a
                 href={contactUrl}
@@ -120,7 +120,7 @@ const MainContent: React.FC = () => {
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs transition-colors"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
-                Quero isto na minha barbearia
+                Saber mais
               </a>
             )}
           </div>

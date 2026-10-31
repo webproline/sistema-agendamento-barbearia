@@ -24,6 +24,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Appointment, Barber } from '../../types/barbershop';
+import { MonthCalendar } from '../common/MonthCalendar';
 
 interface DailyTimelineViewProps {
   onOpenQuickBookingWithParams: (date: string, time: string, barberId: string) => void;
@@ -43,6 +44,7 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
   } = useBarbershop();
 
   const [viewMode, setViewMode] = useState<'columns' | 'list'>('columns');
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   // Filter appointments for the selected date
   const dayAppointments = appointments.filter(a => a.date === selectedDate);
@@ -101,12 +103,15 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
           </button>
 
           <div className="relative ml-2">
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={e => setSelectedDate(e.target.value)}
-              className="bg-stone-950 border border-stone-800 rounded-xl px-3 py-1.5 text-xs text-stone-200 focus:outline-none focus:border-amber-500"
-            />
+            <button
+              type="button"
+              onClick={() => setIsCalendarOpen(open => !open)}
+              aria-expanded={isCalendarOpen}
+              className="flex items-center gap-2 rounded-xl border border-stone-800 bg-stone-950 px-3 py-1.5 text-xs text-stone-200 hover:border-stone-600"
+            >
+              <CalendarIcon className="h-4 w-4 text-amber-400" />
+              Calendário
+            </button>
           </div>
         </div>
 
@@ -153,6 +158,19 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
           </button>
         </div>
       </div>
+
+      {isCalendarOpen && (
+        <div className="w-full max-w-md">
+          <MonthCalendar
+            selectedDate={selectedDate}
+            onSelectDate={date => {
+              setSelectedDate(date);
+              setIsCalendarOpen(false);
+            }}
+            markedDates={appointments.filter(a => a.status !== 'cancelado').map(a => a.date)}
+          />
+        </div>
+      )}
 
       {/* VIEW 1: Barbershop Columns Timeline (Fresha/Booksy-style for Desktop PC) */}
       {viewMode === 'columns' ? (

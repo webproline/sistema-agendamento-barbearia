@@ -2,9 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useBarbershop } from '../../context/BarbershopContext';
 import {
   formatDatePT,
-  formatDateShortPT,
   getTodayDateString,
-  addDays,
   downloadICSFile,
   getClientWhatsAppConfirmationUrl,
 } from '../../utils/calendar';
@@ -28,6 +26,7 @@ import {
   Check,
 } from 'lucide-react';
 import { Appointment, Barber, Service } from '../../types/barbershop';
+import { MonthCalendar } from '../common/MonthCalendar';
 
 export const ClientBookingFlow: React.FC = () => {
   const {
@@ -72,25 +71,6 @@ export const ClientBookingFlow: React.FC = () => {
   const selectedBarber = useMemo(() => {
     return barbers.find(b => b.id === selectedBarberId) || barbers[0];
   }, [barbers, selectedBarberId]);
-
-  // Date choices (Next 12 days)
-  const availableDates = useMemo(() => {
-    const list: { dateStr: string; dayLabel: string; dateLabel: string; isSunday: boolean }[] = [];
-    const today = getTodayDateString();
-    for (let i = 0; i < 14; i++) {
-      const d = addDays(today, i);
-      const [y, m, dayNum] = d.split('-').map(Number);
-      const dateObj = new Date(y, m - 1, dayNum);
-      const dayOfWeek = dateObj.getDay();
-      list.push({
-        dateStr: d,
-        dayLabel: i === 0 ? 'Hoje' : i === 1 ? 'Amanhã' : formatDateShortPT(d),
-        dateLabel: `${dayNum} ${dateObj.toLocaleDateString('pt-PT', { month: 'short' })}`,
-        isSunday: dayOfWeek === 0,
-      });
-    }
-    return list;
-  }, []);
 
   // Compute available slots
   const availableSlots = useMemo(() => {
@@ -169,13 +149,13 @@ export const ClientBookingFlow: React.FC = () => {
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
           <span className="text-amber-500 text-xs sm:text-sm font-semibold tracking-wider uppercase mb-2 block">
-            Marcação Autónoma & Instantânea
+            Marque a sua visita
           </span>
           <h1 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-white mb-3">
             {config.name}
           </h1>
           <p className="text-stone-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            {config.subtitle} Escolha o seu barbeiro, selecione os serviços e reserve o seu horário em menos de 1 minuto sem esperas.
+            {config.subtitle} Escolha o serviço, o barbeiro e o horário que lhe convém.
           </p>
 
           <div className="mt-5 flex flex-wrap items-center justify-center gap-4 text-xs text-stone-400">
@@ -490,45 +470,21 @@ export const ClientBookingFlow: React.FC = () => {
               </div>
             </div>
 
-            {/* Date carousel / horizontal scroll */}
+            {/* Month calendar */}
             <div className="mb-6">
               <label className="text-xs font-semibold text-stone-400 uppercase tracking-wider block mb-2.5">
-                1. Selecione o Dia
+                1. Escolha uma data
               </label>
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-                {availableDates.map(item => {
-                  const isSelected = selectedDate === item.dateStr;
-                  const isClosed = item.isSunday;
-
-                  return (
-                    <button
-                      key={item.dateStr}
-                      disabled={isClosed}
-                      onClick={() => {
-                        setSelectedDate(item.dateStr);
-                        setSelectedTime('');
-                      }}
-                      className={`min-w-[84px] p-3 rounded-xl border text-center transition-all shrink-0 flex flex-col items-center justify-center ${
-                        isClosed
-                          ? 'opacity-40 bg-stone-950/40 border-stone-900 cursor-not-allowed'
-                          : isSelected
-                          ? 'bg-amber-500 text-stone-950 border-amber-500 font-bold shadow-md shadow-amber-500/20'
-                          : 'bg-stone-950 border-stone-800 text-stone-300 hover:border-stone-700 hover:bg-stone-800/60'
-                      }`}
-                    >
-                      <span className={`text-[11px] uppercase ${isSelected ? 'text-stone-950 font-bold' : 'text-stone-400'}`}>
-                        {item.dayLabel}
-                      </span>
-                      <span className={`text-base font-bold my-0.5 ${isSelected ? 'text-stone-950' : 'text-white'}`}>
-                        {item.dateLabel.split(' ')[0]}
-                      </span>
-                      <span className={`text-[11px] ${isSelected ? 'text-stone-950/80 font-medium' : 'text-stone-500'}`}>
-                        {isClosed ? 'Fechado' : item.dateLabel.split(' ')[1]}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+              <MonthCalendar
+                selectedDate={selectedDate}
+                minDate={getTodayDateString()}
+                disableSundays
+                workingDays={selectedBarber?.workingDays}
+                onSelectDate={date => {
+                  setSelectedDate(date);
+                  setSelectedTime('');
+                }}
+              />
             </div>
 
             {/* Time slots */}
@@ -733,7 +689,7 @@ export const ClientBookingFlow: React.FC = () => {
               <div className="p-3 bg-stone-950 border border-stone-800/80 rounded-xl flex items-start gap-3 text-xs text-stone-400">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <p>
-                  Garantia de pontualidade: reservamos a cadeira exclusivamente para si. O pagamento é realizado diretamente no balcão da barbearia (Dinheiro, MB Way ou Multibanco).
+                  O pagamento é feito na barbearia. Aceitamos dinheiro, MB WAY ou cartão.
                 </p>
               </div>
 
@@ -773,7 +729,7 @@ export const ClientBookingFlow: React.FC = () => {
                 Tudo pronto, {confirmedBooking.clientName.split(' ')[0]}!
               </h2>
               <p className="text-xs sm:text-sm text-stone-400 mt-1 max-w-md mx-auto">
-                O seu horário foi registado diretamente no sistema da barbearia. Não precisa de ligar nem de esperar.
+                A sua marcação ficou registada. Consulte os detalhes abaixo.
               </p>
             </div>
 
@@ -839,7 +795,7 @@ export const ClientBookingFlow: React.FC = () => {
               <div className="bg-stone-900/60 p-3 rounded-xl border border-stone-800/60 text-xs text-stone-400 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
                 <span>
-                  <strong>Confirmação:</strong> envie a confirmação à barbearia por WhatsApp e guarde a marcação no seu calendário.
+                  <strong>Para sua conveniência:</strong> envie os detalhes por WhatsApp ou adicione a marcação ao calendário.
                 </span>
               </div>
             </div>

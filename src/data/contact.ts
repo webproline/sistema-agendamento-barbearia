@@ -2,7 +2,7 @@
 // CONTACTO E MODO DEMONSTRAÇÃO
 // Preenche estes dados ANTES de enviar a demo a barbearias.
 // Enquanto 'whatsapp' e 'email' estiverem vazios, os botões
-// "Quero isto na minha barbearia" ficam escondidos.
+// O botão de contacto fica escondido.
 // =====================================================================
 export const CONTACT = {
   name: 'Bruna',

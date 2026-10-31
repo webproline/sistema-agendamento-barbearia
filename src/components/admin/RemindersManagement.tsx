@@ -87,7 +87,7 @@ export const RemindersManagement: React.FC = () => {
               Lembretes por WhatsApp com um toque
             </h2>
             <p className="text-stone-300 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
-              O principal motivo para clientes faltarem a cortes de cabelo é o esquecimento. Este módulo prepara a mensagem de lembrete pronta a enviar por WhatsApp, com um toque por cliente, para as marcações de hoje e de amanhã.
+              Prepare uma mensagem para cada cliente com marcação hoje ou amanhã. Reveja o texto e envie pelo WhatsApp.
             </p>
           </div>
 
@@ -108,15 +108,15 @@ export const RemindersManagement: React.FC = () => {
         {/* Metrics Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6 pt-6 border-t border-stone-800">
           <div className="bg-stone-950/70 p-3.5 rounded-xl border border-stone-800/80">
-            <span className="text-[11px] text-stone-400 block uppercase font-medium">Taxa de Assiduidade (exemplo)</span>
-            <span className="text-xl font-mono font-bold text-emerald-400">96.4%</span>
-            <span className="text-[10px] text-stone-500 block mt-0.5">+4.2% vs mês anterior</span>
+            <span className="text-[11px] text-stone-400 block uppercase font-medium">Marcações de hoje</span>
+            <span className="text-xl font-mono font-bold text-emerald-400">{upcomingAppointments.filter(a => a.date === todayStr).length}</span>
+            <span className="text-[10px] text-stone-500 block mt-0.5">Dados da demonstração</span>
           </div>
 
           <div className="bg-stone-950/70 p-3.5 rounded-xl border border-stone-800/80">
-            <span className="text-[11px] text-stone-400 block uppercase font-medium">Faltas Evitadas (exemplo)</span>
-            <span className="text-xl font-mono font-bold text-amber-400">22 este mês</span>
-            <span className="text-[10px] text-stone-500 block mt-0.5">~€410 em cortes protegidos</span>
+            <span className="text-[11px] text-stone-400 block uppercase font-medium">Marcações de amanhã</span>
+            <span className="text-xl font-mono font-bold text-amber-400">{upcomingAppointments.filter(a => a.date === tomorrowStr).length}</span>
+            <span className="text-[10px] text-stone-500 block mt-0.5">Dados da demonstração</span>
           </div>
 
           <div className="bg-stone-950/70 p-3.5 rounded-xl border border-stone-800/80">
@@ -133,7 +133,7 @@ export const RemindersManagement: React.FC = () => {
               <MessageSquare className="w-4 h-4 text-emerald-400" />
               WhatsApp
             </span>
-            <span className="text-[10px] text-stone-500 block mt-0.5">Taxa abertura 99%</span>
+            <span className="text-[10px] text-stone-500 block mt-0.5">Envio manual pelo WhatsApp</span>
           </div>
         </div>
       </div>

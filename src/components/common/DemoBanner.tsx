@@ -12,8 +12,7 @@ export const DemoBanner: React.FC = () => {
         <p className="flex items-start sm:items-center gap-2 text-center sm:text-left">
           <Info className="w-4 h-4 text-amber-400 shrink-0 mt-0.5 sm:mt-0" />
           <span>
-            <strong>Demonstração com dados fictícios.</strong> As marcações ficam apenas neste
-            dispositivo e nenhuma mensagem é enviada a clientes reais.
+            <strong>Está a ver uma demonstração.</strong> Os nomes e as marcações são fictícios e ficam guardados apenas neste dispositivo. As mensagens não são enviadas a clientes reais.
           </span>
         </p>
         {contactUrl && (
@@ -24,7 +23,7 @@ export const DemoBanner: React.FC = () => {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold whitespace-nowrap transition-colors"
           >
             <MessageCircle className="w-3.5 h-3.5" />
-            Quero isto na minha barbearia
+            Saber mais
           </a>
         )}
       </div>
