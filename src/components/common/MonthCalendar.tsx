@@ -93,8 +93,9 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
               className={`relative mx-auto flex h-10 w-10 items-center justify-center rounded-full text-sm transition-colors sm:h-11 sm:w-11 ${
                 isSelected ? 'bg-amber-500 font-bold text-stone-950' :
                 isDisabled ? 'cursor-not-allowed text-stone-700' :
+                isToday ? 'bg-amber-500/10 font-semibold text-amber-300 ring-1 ring-amber-500/70' :
                 'text-stone-200 hover:bg-stone-800'
-              } ${isToday && !isSelected ? 'ring-1 ring-amber-500/70' : ''}`}
+              }`}
             >
               {day}
               {marks.has(dateString) && <span className={`absolute bottom-1 h-1 w-1 rounded-full ${isSelected ? 'bg-stone-950' : 'bg-amber-400'}`} />}

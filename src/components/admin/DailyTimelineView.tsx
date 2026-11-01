@@ -8,7 +8,6 @@ import {
   minutesToTime,
 } from '../../utils/calendar';
 import {
-  Calendar as CalendarIcon,
   Clock,
   User,
   Phone,
@@ -44,7 +43,6 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
   } = useBarbershop();
 
   const [viewMode, setViewMode] = useState<'columns' | 'list'>('columns');
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   // Filter appointments for the selected date
   const dayAppointments = appointments.filter(a => a.date === selectedDate);
@@ -102,17 +100,6 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          <div className="relative ml-2">
-            <button
-              type="button"
-              onClick={() => setIsCalendarOpen(open => !open)}
-              aria-expanded={isCalendarOpen}
-              className="flex items-center gap-2 rounded-xl border border-stone-800 bg-stone-950 px-3 py-1.5 text-xs text-stone-200 hover:border-stone-600"
-            >
-              <CalendarIcon className="h-4 w-4 text-amber-400" />
-              Calendário
-            </button>
-          </div>
         </div>
 
         {/* Current date title & quick stats */}
@@ -159,21 +146,20 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
         </div>
       </div>
 
-      {isCalendarOpen && (
-        <div className="w-full max-w-md">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[380px_minmax(0,1fr)] lg:items-start">
+        <aside className="lg:sticky lg:top-24">
+          <h2 className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-stone-400">Calendário mensal</h2>
           <MonthCalendar
             selectedDate={selectedDate}
-            onSelectDate={date => {
-              setSelectedDate(date);
-              setIsCalendarOpen(false);
-            }}
+            onSelectDate={setSelectedDate}
             markedDates={appointments.filter(a => a.status !== 'cancelado').map(a => a.date)}
           />
-        </div>
-      )}
+        </aside>
 
-      {/* VIEW 1: Barbershop Columns Timeline (Fresha/Booksy-style for Desktop PC) */}
-      {viewMode === 'columns' ? (
+        <div className="min-w-0">
+          <h2 className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-stone-400">Marcações do dia</h2>
+          {/* VIEW 1: Barbershop Columns Timeline */}
+          {viewMode === 'columns' ? (
         <div className="bg-stone-900 border border-stone-800 rounded-2xl overflow-hidden shadow-2xl">
           {/* Barber Column Headers */}
           <div className="grid grid-cols-[70px_repeat(3,minmax(260px,1fr))] border-b border-stone-800 bg-stone-950/80 sticky top-0 z-20 overflow-x-auto">
@@ -367,9 +353,9 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
             })}
           </div>
         </div>
-      ) : (
-        /* VIEW 2: List View (Compact & Ideal for Mobile) */
-        <div className="bg-stone-900 border border-stone-800 rounded-2xl p-4 divide-y divide-stone-800">
+          ) : (
+        /* VIEW 2: List View */
+            <div className="bg-stone-900 border border-stone-800 rounded-2xl p-4 divide-y divide-stone-800">
           {dayAppointments.length === 0 ? (
             <div className="p-8 text-center text-stone-500 text-sm">
               Nenhuma marcação registada para este dia.
@@ -445,8 +431,10 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
                 );
               })
           )}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

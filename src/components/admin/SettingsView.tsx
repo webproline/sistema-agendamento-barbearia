@@ -198,7 +198,13 @@ export const SettingsView: React.FC = () => {
                 <option value={20}>20 minutos</option>
                 <option value={30}>30 minutos (recomendado)</option>
                 <option value={45}>45 minutos</option>
+                <option value={60}>60 minutos</option>
+                <option value={90}>90 minutos</option>
+                <option value={120}>120 minutos</option>
               </select>
+              <p className="mt-1.5 text-[11px] leading-relaxed text-stone-500">
+                Define o intervalo entre horários disponíveis. A duração total dos serviços é contabilizada à parte.
+              </p>
             </div>
           </div>
 
