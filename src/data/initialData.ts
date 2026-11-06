@@ -140,10 +140,10 @@ export const INITIAL_BARBERS: Barber[] = [
 ];
 
 export const INITIAL_CONFIG: BarbershopConfig = {
-  name: 'Barbearia Exemplo',
+  name: 'Barbearia Modelo',
   subtitle: 'Cortes e serviço de barbearia em Braga.',
-  instagramHandle: 'barbearia_exemplo',
-  instagramUrl: 'https://www.instagram.com/barbearia_exemplo',
+  instagramHandle: 'barbearia_modelo',
+  instagramUrl: 'https://www.instagram.com/barbearia_modelo',
   phone: '+351 912 345 678',
   address: 'Rua Exemplo, nº 10',
   city: 'Braga',
@@ -156,7 +156,7 @@ export const INITIAL_CONFIG: BarbershopConfig = {
   slotIntervalMin: 30,
   autoRemindersEnabled: true,
   reminderHoursBefore: 24,
-  whatsappMessageTemplate: 'Olá {cliente}! Lembramos a sua marcação na Barbearia Exemplo para dia {data} às {hora} com o barbeiro {barbeiro}. Responda para confirmar!',
+  whatsappMessageTemplate: 'Olá {cliente}! Lembramos a sua marcação na Barbearia Modelo para dia {data} às {hora} com o barbeiro {barbeiro}. Responda para confirmar!',
 };
 
 export const INITIAL_CLIENTS: ClientProfile[] = [

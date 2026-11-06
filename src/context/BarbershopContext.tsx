@@ -116,7 +116,25 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const [config, setConfig] = useState<BarbershopConfig>(() => {
     const saved = localStorage.getItem(STORAGE_KEY_CONFIG);
-    return saved ? JSON.parse(saved) : INITIAL_CONFIG;
+    if (!saved) return INITIAL_CONFIG;
+
+    const savedConfig: BarbershopConfig = JSON.parse(saved);
+    const savedName = savedConfig.name.trim().toLocaleLowerCase('pt-PT').replace(/\s+/g, ' ');
+    const isPedroVExample = ['barbearia d. pedro v', 'barbearia d.pedro v'].includes(savedName);
+    if (!isPedroVExample) return savedConfig;
+
+    const oldInstagramHandle = 'barbearia_d_pedro_v';
+    return {
+      ...savedConfig,
+      name: INITIAL_CONFIG.name,
+      instagramHandle: savedConfig.instagramHandle.toLowerCase() === oldInstagramHandle
+        ? INITIAL_CONFIG.instagramHandle
+        : savedConfig.instagramHandle,
+      instagramUrl: savedConfig.instagramUrl.includes(oldInstagramHandle)
+        ? INITIAL_CONFIG.instagramUrl
+        : savedConfig.instagramUrl,
+      whatsappMessageTemplate: savedConfig.whatsappMessageTemplate.replace(/barbearia d\.?\s*pedro v/gi, INITIAL_CONFIG.name),
+    };
   });
 
   const [selectedDate, setSelectedDate] = useState<string>(getTodayDateString());
