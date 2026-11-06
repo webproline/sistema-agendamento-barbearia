@@ -13,6 +13,7 @@ import {
   INITIAL_BARBERS,
   INITIAL_CONFIG,
   INITIAL_CLIENTS,
+  DEFAULT_BARBER_PHOTOS,
   getInitialAppointments,
 } from '../data/initialData';
 import {
@@ -93,7 +94,14 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const [barbers, setBarbers] = useState<Barber[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY_BARBERS);
-    return saved ? JSON.parse(saved) : INITIAL_BARBERS;
+    if (!saved) return INITIAL_BARBERS;
+
+    const savedBarbers: Barber[] = JSON.parse(saved);
+    return savedBarbers.map(barber => ({
+      ...barber,
+      // Refresh the built-in photos so older browser data cannot keep broken paths.
+      photoUrl: DEFAULT_BARBER_PHOTOS[barber.id] ?? barber.photoUrl,
+    }));
   });
 
   const [appointments, setAppointments] = useState<Appointment[]>(() => {

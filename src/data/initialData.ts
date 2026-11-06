@@ -1,6 +1,14 @@
 import { Barber, BarbershopConfig, ClientProfile, Service, Appointment } from '../types/barbershop';
 import { getTodayDateString, addDays } from '../utils/calendar';
 
+const publicBaseUrl = import.meta.env.BASE_URL;
+
+export const DEFAULT_BARBER_PHOTOS: Record<string, string> = {
+  'barber-pedro': `${publicBaseUrl}images/barber_pedro_avatar_1791388790367.jpg`,
+  'barber-diogo': `${publicBaseUrl}images/barber_diogo_avatar_1791388801161.jpg`,
+  'barber-tiago': `${publicBaseUrl}images/barber_tiago_avatar_1791388856731.jpg`,
+};
+
 export const INITIAL_SERVICES: Service[] = [
   {
     id: 'srv-corte-classico',
@@ -77,7 +85,7 @@ export const INITIAL_BARBERS: Barber[] = [
     name: 'João',
     role: 'Barbeiro',
     bio: 'Cortes clássicos e atuais, com atenção ao detalhe.',
-    photoUrl: '/images/barber_pedro_avatar_1791388790367.jpg',
+    photoUrl: DEFAULT_BARBER_PHOTOS['barber-pedro'],
     rating: 4.98,
     cutsCount: 3420,
     phone: '+351 912 345 678',
@@ -96,7 +104,7 @@ export const INITIAL_BARBERS: Barber[] = [
     name: 'Diogo Silva',
     role: 'Barbeiro',
     bio: 'Degradês, textura e cortes à tesoura.',
-    photoUrl: '/images/barber_diogo_avatar_1791388801161.jpg',
+    photoUrl: DEFAULT_BARBER_PHOTOS['barber-diogo'],
     rating: 4.95,
     cutsCount: 1850,
     phone: '+351 913 888 777',
@@ -115,7 +123,7 @@ export const INITIAL_BARBERS: Barber[] = [
     name: 'Tiago Mendes',
     role: 'Barbeiro Clássico',
     bio: 'Cortes clássicos e serviço de barba com toalha quente.',
-    photoUrl: '/images/barber_tiago_avatar_1791388856731.jpg',
+    photoUrl: DEFAULT_BARBER_PHOTOS['barber-tiago'],
     rating: 4.92,
     cutsCount: 2100,
     phone: '+351 915 222 333',
