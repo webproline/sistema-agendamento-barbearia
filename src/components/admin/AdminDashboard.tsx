@@ -62,11 +62,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div>
           <div className="flex items-center gap-2 text-xs text-amber-500 font-semibold uppercase tracking-wider mb-1">
             <Monitor className="w-3.5 h-3.5" />
-            <span>Painel Central da Barbearia · Balcão</span>
+            <span>Painel de Gestão</span>
           </div>
           <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
             Gestão de Agendamentos
           </h1>
+          <p className="mt-1 text-sm text-stone-400">
+            Gira as marcações, a equipa e a operação diária da sua barbearia.
+          </p>
         </div>
 
         {/* Action Button */}

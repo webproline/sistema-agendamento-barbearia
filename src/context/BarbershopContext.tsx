@@ -87,6 +87,24 @@ const STORAGE_KEY_APPOINTMENTS = 'dpv_appointments_v1';
 const STORAGE_KEY_CLIENTS = 'dpv_clients_v1';
 const STORAGE_KEY_CONFIG = 'dpv_config_v1';
 
+function loadDemoAppointments(): Appointment[] {
+  const currentExamples = getInitialAppointments();
+  const saved = localStorage.getItem(STORAGE_KEY_APPOINTMENTS);
+  if (!saved) return currentExamples;
+
+  const savedAppointments: Appointment[] = JSON.parse(saved);
+  const currentExamplesById = new Map(currentExamples.map(appointment => [appointment.id, appointment]));
+  const today = getTodayDateString();
+  const refreshedAppointments = savedAppointments.map(appointment => {
+    const currentExample = currentExamplesById.get(appointment.id);
+    return currentExample && appointment.date < today ? currentExample : appointment;
+  });
+  const savedIds = new Set(refreshedAppointments.map(appointment => appointment.id));
+  const missingExamples = currentExamples.filter(appointment => !savedIds.has(appointment.id));
+
+  return [...refreshedAppointments, ...missingExamples];
+}
+
 export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [services, setServices] = useState<Service[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY_SERVICES);
@@ -107,10 +125,7 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   });
 
-  const [appointments, setAppointments] = useState<Appointment[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY_APPOINTMENTS);
-    return saved ? JSON.parse(saved) : getInitialAppointments();
-  });
+  const [appointments, setAppointments] = useState<Appointment[]>(loadDemoAppointments);
 
   const [clients, setClients] = useState<ClientProfile[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY_CLIENTS);

@@ -265,7 +265,7 @@ export const ClientBookingFlow: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-3">
               {barbers.map(barber => {
                 const isSelected = selectedBarberId === barber.id;
                 return (
@@ -274,7 +274,7 @@ export const ClientBookingFlow: React.FC = () => {
                     onClick={() => {
                       setSelectedBarberId(barber.id);
                     }}
-                    className={`relative p-5 rounded-xl border text-left transition-all group flex flex-col justify-between ${
+                    className={`relative h-full p-5 rounded-xl border text-left transition-all group flex flex-col justify-between ${
                       isSelected
                         ? 'bg-stone-800/90 border-amber-500 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500'
                         : 'bg-stone-950/60 border-stone-800 hover:border-stone-700 hover:bg-stone-900/60'
@@ -310,7 +310,7 @@ export const ClientBookingFlow: React.FC = () => {
                         </div>
                       </div>
 
-                      <p className="text-xs text-stone-400 mt-3 line-clamp-2 text-center leading-relaxed">
+                      <p className="mt-3 min-h-14 text-center text-xs leading-relaxed text-stone-400">
                         {barber.bio}
                       </p>
                     </div>

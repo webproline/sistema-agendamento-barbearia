@@ -91,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
               }`}
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>Área do Cliente</span>
+              <span>Marcar Online</span>
             </button>
 
             <button

@@ -92,11 +92,11 @@ export const ExperienceChooser: React.FC<ExperienceChooserProps> = ({ shopName, 
         <div className="h-64 sm:h-72"><BookingPreview /></div>
         <div className="p-5 sm:p-6">
           <div className="flex items-start justify-between gap-3">
-            <div><h2 className="font-display text-xl font-bold text-white">Área do Cliente</h2><p className="mt-1 text-sm text-stone-400">Uma forma simples de escolher serviços, barbeiro e horário.</p></div>
+            <div><h2 className="font-display text-xl font-bold text-white">Marcar Online</h2><p className="mt-1 text-sm text-stone-400">Uma forma simples de escolher serviços, barbeiro e horário.</p></div>
             <CalendarDays className="mt-1 h-5 w-5 shrink-0 text-amber-400" />
           </div>
           <button onClick={() => onChoose('client')} className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 px-4 py-3 text-sm font-bold text-stone-950 transition-colors hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-stone-900">
-            Explorar área do cliente <ArrowRight className="h-4 w-4" />
+            Explorar experiência de marcação <ArrowRight className="h-4 w-4" />
           </button>
         </div>
       </article>
@@ -109,7 +109,7 @@ export const ExperienceChooser: React.FC<ExperienceChooserProps> = ({ shopName, 
             <LayoutDashboard className="mt-1 h-5 w-5 shrink-0 text-amber-400" />
           </div>
           <button onClick={() => onChoose('admin')} className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-stone-700 bg-stone-950 px-4 py-3 text-sm font-bold text-stone-100 transition-colors hover:border-amber-500/50 hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-stone-900">
-            Explorar painel de gestão <ArrowRight className="h-4 w-4 text-amber-400" />
+            Explorar gestão da barbearia <ArrowRight className="h-4 w-4 text-amber-400" />
           </button>
         </div>
       </article>
