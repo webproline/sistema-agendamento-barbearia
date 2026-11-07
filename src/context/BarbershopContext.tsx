@@ -60,7 +60,7 @@ interface BarbershopContextType {
   setAdminTab: (tab: 'agenda' | 'reminders' | 'clients' | 'services' | 'team' | 'analytics' | 'settings') => void;
   
   // Actions
-  createAppointment: (payload: CreateAppointmentPayload) => Appointment;
+  createAppointment: (payload: CreateAppointmentPayload) => Appointment | null;
   updateAppointmentStatus: (id: string, status: AppointmentStatus) => void;
   rescheduleAppointment: (id: string, newDate: string, newTime: string, newBarberId?: string) => void;
   sendReminder: (id: string, method?: 'whatsapp' | 'sms' | 'auto') => { success: boolean; url?: string };
@@ -275,8 +275,31 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   // Create appointment
-  const createAppointment = (payload: CreateAppointmentPayload): Appointment => {
+  const createAppointment = (payload: CreateAppointmentPayload): Appointment | null => {
     const { totalDuration, totalPrice } = getSelectedServicesInfo(payload.serviceIds);
+
+    const requestedStart = timeToMinutes(payload.time);
+    const requestedEnd = requestedStart + totalDuration;
+    const hasConflict = appointments.some(appointment => {
+      if (
+        appointment.date !== payload.date ||
+        appointment.barberId !== payload.barberId ||
+        appointment.status === 'cancelado'
+      ) return false;
+
+      const existingStart = timeToMinutes(appointment.time);
+      const existingEnd = existingStart + appointment.durationMin;
+      return requestedStart < existingEnd && requestedEnd > existingStart;
+    });
+
+    if (hasConflict) {
+      addToast({
+        type: 'warning',
+        title: 'Horário indisponível',
+        description: 'Este barbeiro já tem uma marcação nesse período. Escolha outro horário ou profissional.',
+      });
+      return null;
+    }
 
     const newAppointment: Appointment = {
       id: generateAppointmentId(),
@@ -409,6 +432,34 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     newTime: string,
     newBarberId?: string
   ) => {
+    const appointmentToMove = appointments.find(app => app.id === id);
+    if (!appointmentToMove) return;
+
+    const targetBarberId = newBarberId || appointmentToMove.barberId;
+    const requestedStart = timeToMinutes(newTime);
+    const requestedEnd = requestedStart + appointmentToMove.durationMin;
+    const hasConflict = appointments.some(app => {
+      if (
+        app.id === id ||
+        app.date !== newDate ||
+        app.barberId !== targetBarberId ||
+        app.status === 'cancelado'
+      ) return false;
+
+      const existingStart = timeToMinutes(app.time);
+      const existingEnd = existingStart + app.durationMin;
+      return requestedStart < existingEnd && requestedEnd > existingStart;
+    });
+
+    if (hasConflict) {
+      addToast({
+        type: 'warning',
+        title: 'Horário indisponível',
+        description: 'Este barbeiro já tem uma marcação nesse período. Escolha outro horário ou profissional.',
+      });
+      return;
+    }
+
     setAppointments(prev =>
       prev.map(app => {
         if (app.id !== id) return app;

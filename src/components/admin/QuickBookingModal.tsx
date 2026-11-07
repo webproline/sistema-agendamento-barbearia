@@ -46,7 +46,7 @@ export const QuickBookingModal: React.FC<QuickBookingModalProps> = ({
       return;
     }
 
-    createAppointment({
+    const appointment = createAppointment({
       clientName: clientName.trim(),
       clientPhone: clientPhone.trim(),
       clientNotes: clientNotes.trim() || undefined,
@@ -56,6 +56,11 @@ export const QuickBookingModal: React.FC<QuickBookingModalProps> = ({
       time,
       source,
     });
+
+    if (!appointment) {
+      setError('Este barbeiro já tem uma marcação durante esse período. Escolha outro horário.');
+      return;
+    }
 
     onClose();
     setClientName('');

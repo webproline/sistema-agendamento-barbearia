@@ -127,6 +127,12 @@ export const ClientBookingFlow: React.FC = () => {
       source: 'online',
     });
 
+    if (!newAppointment) {
+      setFormError('Esse horário acabou de ficar indisponível. Escolha outro horário.');
+      setStep(3);
+      return;
+    }
+
     // Keep the management agenda on the day just booked so the new entry is visible there.
     setAdminSelectedDate(selectedDate);
     setConfirmedBooking(newAppointment);
