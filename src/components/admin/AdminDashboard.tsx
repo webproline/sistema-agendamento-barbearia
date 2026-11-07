@@ -100,7 +100,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           }`}
         >
           <Calendar className="w-4 h-4" />
-          <span>Agenda Diária (Balcão)</span>
+          <span>Agenda Diária</span>
         </button>
 
         <button
