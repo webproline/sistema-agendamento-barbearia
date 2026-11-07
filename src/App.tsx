@@ -69,7 +69,7 @@ const MainContent: React.FC = () => {
               {config.name}
             </span>
             <span className="text-stone-600">·</span>
-            <span>{config.address}, {config.city}</span>
+            <span>{[config.address, config.city].filter(Boolean).join(', ')}</span>
           </div>
 
           <div className="flex items-center gap-6 text-stone-400 flex-wrap justify-center">

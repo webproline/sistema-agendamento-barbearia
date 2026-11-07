@@ -130,6 +130,7 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const savedName = normalizeIdentity(savedConfig.name);
     const savedHandle = normalizeIdentity(savedConfig.instagramHandle);
     const savedInstagramUrl = normalizeIdentity(savedConfig.instagramUrl);
+    const savedAddress = normalizeIdentity(savedConfig.address);
     const oldBrand = 'barbeariadpedrov';
     const oldDemoBrand = 'barbeariaexemplo';
     const oldInstagram = [savedHandle, savedInstagramUrl].some(value =>
@@ -137,13 +138,17 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     );
     const oldBusinessName = [oldBrand, oldDemoBrand].includes(savedName);
     const oldSamplePhone = savedConfig.phone.replace(/\D/g, '') === '351912345678';
+    const oldRealAddress = savedAddress.includes('ruadompedrov');
     const oldTemplate = /barbearia\s+(?:d\.?\s*pedro\s*v|exemplo)/i.test(savedConfig.whatsappMessageTemplate);
-    if (!oldInstagram && !oldBusinessName && !oldSamplePhone && !oldTemplate) return savedConfig;
+    if (!oldInstagram && !oldBusinessName && !oldSamplePhone && !oldRealAddress && !oldTemplate) return savedConfig;
 
     return {
       ...savedConfig,
       name: oldBusinessName ? INITIAL_CONFIG.name : savedConfig.name,
-      phone: oldInstagram || oldBusinessName || oldSamplePhone ? '' : savedConfig.phone,
+      phone: oldInstagram || oldBusinessName || oldSamplePhone || oldRealAddress ? '' : savedConfig.phone,
+      address: oldRealAddress ? INITIAL_CONFIG.address : savedConfig.address,
+      city: oldRealAddress ? INITIAL_CONFIG.city : savedConfig.city,
+      postalCode: oldRealAddress ? INITIAL_CONFIG.postalCode : savedConfig.postalCode,
       instagramHandle: oldInstagram ? DEFAULT_INSTAGRAM_HANDLE : savedConfig.instagramHandle,
       instagramUrl: oldInstagram ? '' : savedConfig.instagramUrl,
       whatsappMessageTemplate: oldTemplate

@@ -74,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
                   {config.name}
                 </span>
                 <span className="text-[11px] text-stone-400 hidden sm:block tracking-wide">
-                  Tradição & Estilo · {config.city}
+                  Tradição & Estilo{config.city ? ` · ${config.city}` : ''}
                 </span>
               </div>
             </button>

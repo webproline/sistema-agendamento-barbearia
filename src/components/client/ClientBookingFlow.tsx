@@ -161,7 +161,7 @@ export const ClientBookingFlow: React.FC = () => {
           <div className="mt-5 flex flex-wrap items-center justify-center gap-4 text-xs text-stone-400">
             <span className="flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-amber-500" />
-              {config.address}, {config.city}
+              {[config.address, config.city].filter(Boolean).join(', ')}
             </span>
             <span aria-hidden="true" className="text-stone-600">·</span>
             <span className="flex items-center gap-1.5">
@@ -744,7 +744,7 @@ export const ClientBookingFlow: React.FC = () => {
                     {config.name}
                   </span>
                   <p className="text-[11px] text-stone-400">
-                    {config.address}, {config.city}
+                    {[config.address, config.city].filter(Boolean).join(', ')}
                   </p>
                 </div>
                 <div className="text-right">

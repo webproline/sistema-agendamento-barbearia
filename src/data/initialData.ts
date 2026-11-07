@@ -142,13 +142,13 @@ export const INITIAL_BARBERS: Barber[] = [
 
 export const INITIAL_CONFIG: BarbershopConfig = {
   name: 'Barbearia Modelo',
-  subtitle: 'Cortes e serviço de barbearia em Braga.',
+  subtitle: 'Cortes e serviço de barbearia.',
   instagramHandle: DEFAULT_INSTAGRAM_HANDLE,
   instagramUrl: '',
   phone: '',
-  address: 'Rua Exemplo, nº 10',
-  city: 'Braga',
-  postalCode: '4700-000',
+  address: 'Morada de demonstração',
+  city: '',
+  postalCode: '',
   openingHours: {
     weekdays: '09:00 - 19:30',
     saturday: '09:00 - 19:00',
