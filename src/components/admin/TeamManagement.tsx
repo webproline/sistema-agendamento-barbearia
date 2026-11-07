@@ -118,7 +118,7 @@ export const TeamManagement: React.FC = () => {
                     {barber.workingHours.lunchStart || '13:00'} - {barber.workingHours.lunchEnd || '14:00'}
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
+                {barber.phone && <div className="flex items-center justify-between">
                   <span className="text-stone-400 flex items-center gap-1.5">
                     <Phone className="w-3.5 h-3.5 text-stone-500" />
                     Contacto:
@@ -126,7 +126,7 @@ export const TeamManagement: React.FC = () => {
                   <span className="font-mono text-stone-300">
                     {barber.phone}
                   </span>
-                </div>
+                </div>}
               </div>
 
               <div className="flex flex-wrap gap-1 justify-center">

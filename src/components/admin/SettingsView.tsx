@@ -98,6 +98,7 @@ export const SettingsView: React.FC = () => {
               <input
                 type="text"
                 value={phone}
+                placeholder="Deixe em branco para ocultar na demonstração"
                 onChange={e => setPhone(e.target.value)}
                 className="w-full bg-stone-950 border border-stone-800 rounded-xl py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500"
               />
@@ -153,6 +154,7 @@ export const SettingsView: React.FC = () => {
                 <input
                   type="text"
                   value={instagramHandle}
+                  placeholder="Deixe em branco para ocultar na demonstração"
                   onChange={e => setInstagramHandle(e.target.value)}
                   className="w-full bg-stone-950 border border-stone-800 rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-amber-500"
                 />
@@ -166,6 +168,7 @@ export const SettingsView: React.FC = () => {
               <input
                 type="url"
                 value={instagramUrl}
+                placeholder="Deixe em branco para ocultar na demonstração"
                 onChange={e => setInstagramUrl(e.target.value)}
                 className="w-full bg-stone-950 border border-stone-800 rounded-xl py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500"
               />

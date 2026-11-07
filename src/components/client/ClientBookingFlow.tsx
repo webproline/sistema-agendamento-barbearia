@@ -644,7 +644,7 @@ export const ClientBookingFlow: React.FC = () => {
                     <input
                       type="tel"
                       required
-                      placeholder="ex: 912 345 678"
+                      placeholder="Ex.: 9xx xxx xxx"
                       value={clientPhone}
                       onChange={e => setClientPhone(e.target.value)}
                       className="w-full bg-stone-950 border border-stone-800 rounded-xl py-2.5 pl-10 pr-3 text-sm text-white placeholder-stone-600 focus:outline-none focus:border-amber-500 transition-colors"

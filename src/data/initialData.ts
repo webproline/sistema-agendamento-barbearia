@@ -88,7 +88,7 @@ export const INITIAL_BARBERS: Barber[] = [
     photoUrl: DEFAULT_BARBER_PHOTOS['barber-pedro'],
     rating: 4.98,
     cutsCount: 3420,
-    phone: '+351 912 345 678',
+    phone: '',
     active: true,
     specialties: ['Cortes Clássicos', 'Barboterapia Tradicional', 'Visagismo'],
     workingHours: {
@@ -107,7 +107,7 @@ export const INITIAL_BARBERS: Barber[] = [
     photoUrl: DEFAULT_BARBER_PHOTOS['barber-diogo'],
     rating: 4.95,
     cutsCount: 1850,
-    phone: '+351 913 888 777',
+    phone: '',
     active: true,
     specialties: ['Skin Fade', 'Texturização', 'Barba Desenhada'],
     workingHours: {
@@ -126,7 +126,7 @@ export const INITIAL_BARBERS: Barber[] = [
     photoUrl: DEFAULT_BARBER_PHOTOS['barber-tiago'],
     rating: 4.92,
     cutsCount: 2100,
-    phone: '+351 915 222 333',
+    phone: '',
     active: true,
     specialties: ['Barboterapia', 'Corte Clássico Executivo', 'Alinhamento'],
     workingHours: {
@@ -142,9 +142,9 @@ export const INITIAL_BARBERS: Barber[] = [
 export const INITIAL_CONFIG: BarbershopConfig = {
   name: 'Barbearia Modelo',
   subtitle: 'Cortes e serviço de barbearia em Braga.',
-  instagramHandle: 'barbearia_modelo',
-  instagramUrl: 'https://www.instagram.com/barbearia_modelo',
-  phone: '+351 912 345 678',
+  instagramHandle: '',
+  instagramUrl: '',
+  phone: '',
   address: 'Rua Exemplo, nº 10',
   city: 'Braga',
   postalCode: '4700-000',

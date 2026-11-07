@@ -117,16 +117,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
               </button>
             )}
 
-            <a
-              href={config.instagramUrl}
-              target="_blank"
-              rel="noreferrer"
-              title={`Instagram @${config.instagramHandle}`}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-stone-300 hover:text-white bg-stone-900/80 hover:bg-stone-800 border border-stone-800 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <Instagram className="w-3.5 h-3.5 text-pink-400" />
-              <span className="hidden md:inline">@{config.instagramHandle}</span>
-            </a>
+            {config.instagramHandle && config.instagramUrl && (
+              <a
+                href={config.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                title={`Instagram @${config.instagramHandle}`}
+                className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-stone-300 hover:text-white bg-stone-900/80 hover:bg-stone-800 border border-stone-800 rounded-lg transition-colors whitespace-nowrap"
+              >
+                <Instagram className="w-3.5 h-3.5 text-pink-400" />
+                <span className="hidden md:inline">@{config.instagramHandle}</span>
+              </a>
+            )}
           </div>
 
         </div>

@@ -101,6 +101,8 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       ...barber,
       // Refresh the built-in photos so older browser data cannot keep broken paths.
       photoUrl: DEFAULT_BARBER_PHOTOS[barber.id] ?? barber.photoUrl,
+      // The demo does not publish personal phone numbers for sample barbers.
+      phone: DEFAULT_BARBER_PHOTOS[barber.id] ? '' : barber.phone,
     }));
   });
 
@@ -119,21 +121,33 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     if (!saved) return INITIAL_CONFIG;
 
     const savedConfig: BarbershopConfig = JSON.parse(saved);
-    const savedName = savedConfig.name.trim().toLocaleLowerCase('pt-PT').replace(/\s+/g, ' ');
-    const isPedroVExample = ['barbearia d. pedro v', 'barbearia d.pedro v'].includes(savedName);
-    if (!isPedroVExample) return savedConfig;
+    const normalizeIdentity = (value: string) => value
+      .toLocaleLowerCase('pt-PT')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]/g, '');
+    const savedName = normalizeIdentity(savedConfig.name);
+    const savedHandle = normalizeIdentity(savedConfig.instagramHandle);
+    const savedInstagramUrl = normalizeIdentity(savedConfig.instagramUrl);
+    const oldBrand = 'barbeariadpedrov';
+    const oldDemoBrand = 'barbeariaexemplo';
+    const oldInstagram = [savedHandle, savedInstagramUrl].some(value =>
+      value.includes(oldBrand) || value.includes(oldDemoBrand)
+    );
+    const oldBusinessName = [oldBrand, oldDemoBrand].includes(savedName);
+    const oldSamplePhone = savedConfig.phone.replace(/\D/g, '') === '351912345678';
+    const oldTemplate = /barbearia\s+(?:d\.?\s*pedro\s*v|exemplo)/i.test(savedConfig.whatsappMessageTemplate);
+    if (!oldInstagram && !oldBusinessName && !oldSamplePhone && !oldTemplate) return savedConfig;
 
-    const oldInstagramHandle = 'barbearia_d_pedro_v';
     return {
       ...savedConfig,
-      name: INITIAL_CONFIG.name,
-      instagramHandle: savedConfig.instagramHandle.toLowerCase() === oldInstagramHandle
-        ? INITIAL_CONFIG.instagramHandle
-        : savedConfig.instagramHandle,
-      instagramUrl: savedConfig.instagramUrl.includes(oldInstagramHandle)
-        ? INITIAL_CONFIG.instagramUrl
-        : savedConfig.instagramUrl,
-      whatsappMessageTemplate: savedConfig.whatsappMessageTemplate.replace(/barbearia d\.?\s*pedro v/gi, INITIAL_CONFIG.name),
+      name: oldBusinessName ? INITIAL_CONFIG.name : savedConfig.name,
+      phone: oldInstagram || oldBusinessName || oldSamplePhone ? '' : savedConfig.phone,
+      instagramHandle: oldInstagram ? '' : savedConfig.instagramHandle,
+      instagramUrl: oldInstagram ? '' : savedConfig.instagramUrl,
+      whatsappMessageTemplate: oldTemplate
+        ? savedConfig.whatsappMessageTemplate.replace(/barbearia\s+(?:d\.?\s*pedro\s*v|exemplo)/gi, INITIAL_CONFIG.name)
+        : savedConfig.whatsappMessageTemplate,
     };
   });
 

@@ -44,29 +44,6 @@ const MainContent: React.FC = () => {
             )}
           </main>
 
-          <div className="fixed bottom-4 left-4 z-40 hidden sm:flex items-center gap-2 bg-stone-900/90 backdrop-blur-md p-1.5 rounded-2xl border border-stone-800 shadow-2xl">
-            <span className="text-[11px] font-medium text-stone-400 pl-2">Pré-visualização:</span>
-            <button
-              onClick={() => setActiveView('client')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                activeView === 'client'
-                  ? 'bg-amber-500 text-stone-950 font-bold'
-                  : 'text-stone-300 hover:text-white hover:bg-stone-800'
-              }`}
-            >
-              Área do Cliente
-            </button>
-            <button
-              onClick={() => setActiveView('admin')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                activeView === 'admin'
-                  ? 'bg-amber-500 text-stone-950 font-bold'
-                  : 'text-stone-300 hover:text-white hover:bg-stone-800'
-              }`}
-            >
-              Painel de Gestão
-            </button>
-          </div>
         </>
       )}
 
@@ -94,23 +71,27 @@ const MainContent: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-6 text-stone-400 flex-wrap justify-center">
-            <span className="flex items-center gap-1.5">
-              <Phone className="w-3 h-3 text-stone-500" />
-              {config.phone}
-            </span>
+            {config.phone && (
+              <span className="flex items-center gap-1.5">
+                <Phone className="w-3 h-3 text-stone-500" />
+                {config.phone}
+              </span>
+            )}
             <span className="flex items-center gap-1.5">
               <Clock className="w-3 h-3 text-stone-500" />
               Seg - Sáb: {config.openingHours.weekdays}
             </span>
-            <a
-              href={config.instagramUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-1.5 text-pink-400 hover:underline"
-            >
-              <Instagram className="w-3 h-3" />
-              <span>@{config.instagramHandle}</span>
-            </a>
+            {config.instagramHandle && config.instagramUrl && (
+              <a
+                href={config.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 text-pink-400 hover:underline"
+              >
+                <Instagram className="w-3 h-3" />
+                <span>@{config.instagramHandle}</span>
+              </a>
+            )}
           </div>
 
           <div className="flex flex-col items-center md:items-end gap-2 text-[11px] text-stone-500">
