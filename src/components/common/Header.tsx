@@ -9,14 +9,9 @@ import {
   CheckCircle2,
   AlertCircle,
   X,
-  Plus,
 } from 'lucide-react';
 
-interface HeaderProps {
-  onOpenQuickBooking?: () => void;
-}
-
-export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
+export const Header: React.FC = () => {
   const { activeView, setActiveView, config, toasts, removeToast } = useBarbershop();
   const instagramHandle = config.instagramHandle || DEFAULT_INSTAGRAM_HANDLE;
 
@@ -109,16 +104,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
 
           {/* Zone 3: Primary actions */}
           <div className="flex items-center gap-2.5">
-            {activeView === 'admin' && onOpenQuickBooking && (
-              <button
-                onClick={onOpenQuickBooking}
-                className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-stone-950 bg-amber-500 hover:bg-amber-400 rounded-lg shadow-sm transition-all whitespace-nowrap active:scale-95"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Nova Marcação</span>
-              </button>
-            )}
-
             {config.instagramUrl ? (
               <a
                 href={config.instagramUrl}

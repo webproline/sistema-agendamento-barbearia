@@ -84,7 +84,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl text-xs shadow-lg shadow-amber-500/20 transition-all active:scale-95"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
-            <span>+ Nova Marcação (Balcão / Telefone)</span>
+            <span>Nova Marcação</span>
           </button>
         </div>
       </div>

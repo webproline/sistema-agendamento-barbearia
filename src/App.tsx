@@ -33,7 +33,7 @@ const MainContent: React.FC = () => {
         </main>
       ) : (
         <>
-          <Header onOpenQuickBooking={() => setIsQuickBookingOpen(true)} />
+          <Header />
 
           <main className="flex-1">
             {activeView === 'client' ? (
