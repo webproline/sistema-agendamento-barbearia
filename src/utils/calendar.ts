@@ -80,15 +80,15 @@ export function getWhatsAppReminderUrl(
   const destinationPhone = cleanPhone.length === 9 ? `351${cleanPhone}` : cleanPhone;
 
   const dateFormatted = formatDatePT(appointment.date);
-  const message = `💈 *${shopName}* 💈
+  const message = `*${shopName}*
 Olá ${appointment.clientName}! 
 
 Lembramos a sua marcação:
-🗓️ *Data:* ${dateFormatted}
-⏰ *Hora:* ${appointment.time}
-✂️ *Serviço(s):* ${servicesNames}
-👤 *Barbeiro:* ${barberName}
-📍 *Local:* ${shopName}
+*Data:* ${dateFormatted}
+*Hora:* ${appointment.time}
+*Serviço(s):* ${servicesNames}
+*Barbeiro:* ${barberName}
+*Local:* ${shopName}
 
 Por favor, responda *CONFIRMAR* para garantir o seu horário ou avise com antecedência se necessitar reagendar.
 
@@ -110,26 +110,25 @@ export function getClientWhatsAppConfirmationUrl(
 
   const dateFormatted = formatDatePT(appointment.date);
   const message = `Olá! Acabei de marcar pelo site na *${shopName}*:
-🎟️ *Código:* ${appointment.id}
-👤 *Nome:* ${appointment.clientName}
-📱 *Contacto:* ${appointment.clientPhone}
-🗓️ *Data:* ${dateFormatted}
-⏰ *Hora:* ${appointment.time}
-✂️ *Serviço:* ${servicesNames}
-💈 *Barbeiro:* ${barberName}
+*Código:* ${appointment.id}
+*Nome:* ${appointment.clientName}
+*Contacto:* ${appointment.clientPhone}
+*Data:* ${dateFormatted}
+*Hora:* ${appointment.time}
+*Serviço:* ${servicesNames}
+*Barbeiro:* ${barberName}
 
 Confirmam a receção? Obrigado!`;
 
   return getWhatsAppUrl(destinationPhone, message);
 }
 
-// Generate .ics file download for calendar apps (Apple, Google, Outlook)
-export function downloadICSFile(
+function createICSFile(
   appointment: Appointment,
   barber: Barber,
   services: Service[],
   shopName: string = 'Barbearia'
-): void {
+): File {
   const [year, month, day] = appointment.date.split('-').map(Number);
   const [hours, minutes] = appointment.time.split(':').map(Number);
 
@@ -160,13 +159,71 @@ export function downloadICSFile(
     'END:VCALENDAR',
   ].join('\r\n');
 
-  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-  const url = window.URL.createObjectURL(blob);
+  return new File([icsContent], `agendamento-${appointment.id}.ics`, {
+    type: 'text/calendar;charset=utf-8',
+  });
+}
+
+// Generate an event link that opens a pre-filled Google Calendar draft.
+export function getGoogleCalendarUrl(
+  appointment: Appointment,
+  barber: Barber,
+  services: Service[],
+  shopName: string,
+  location: string
+): string {
+  const [year, month, day] = appointment.date.split('-').map(Number);
+  const [hours, minutes] = appointment.time.split(':').map(Number);
+  const startDate = new Date(year, month - 1, day, hours, minutes);
+  const endDate = new Date(startDate.getTime() + appointment.durationMin * 60000);
+  const formatGoogleDate = (date: Date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  const serviceNames = services.map(service => service.name).join(' + ');
+  const eventUrl = new URL('https://calendar.google.com/calendar/r/eventedit');
+
+  eventUrl.search = new URLSearchParams({
+    action: 'TEMPLATE',
+    dates: `${formatGoogleDate(startDate)}/${formatGoogleDate(endDate)}`,
+    stz: 'Europe/Lisbon',
+    etz: 'Europe/Lisbon',
+    text: `Marcação na ${shopName}`,
+    details: `Serviço(s): ${serviceNames}\nBarbeiro: ${barber.name}\nCódigo: ${appointment.id}`,
+    location,
+  }).toString();
+
+  return eventUrl.toString();
+}
+
+// Generate .ics file download for calendar apps that cannot receive a shared file.
+export function downloadICSFile(
+  appointment: Appointment,
+  barber: Barber,
+  services: Service[],
+  shopName: string = 'Barbearia'
+): void {
+  const file = createICSFile(appointment, barber, services, shopName);
+  const url = window.URL.createObjectURL(file);
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', `agendamento-${appointment.id}.ics`);
+  link.setAttribute('download', file.name);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
   window.URL.revokeObjectURL(url);
+}
+
+// Open the device share sheet so the user can choose a calendar app.
+export async function shareICSFile(
+  appointment: Appointment,
+  barber: Barber,
+  services: Service[],
+  shopName: string = 'Barbearia'
+): Promise<boolean> {
+  const file = createICSFile(appointment, barber, services, shopName);
+  if (!navigator.share || !navigator.canShare?.({ files: [file] })) {
+    downloadICSFile(appointment, barber, services, shopName);
+    return false;
+  }
+
+  await navigator.share({ files: [file], title: `Marcação na ${shopName}` });
+  return true;
 }

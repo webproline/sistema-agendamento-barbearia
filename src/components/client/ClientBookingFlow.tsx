@@ -5,6 +5,8 @@ import {
   getTodayDateString,
   downloadICSFile,
   getClientWhatsAppConfirmationUrl,
+  getGoogleCalendarUrl,
+  shareICSFile,
 } from '../../utils/calendar';
 import {
   Scissors,
@@ -34,7 +36,9 @@ export const ClientBookingFlow: React.FC = () => {
     barbers,
     config,
     createAppointment,
+    setSelectedDate: setAdminSelectedDate,
     getAvailableSlots,
+    addToast,
   } = useBarbershop();
 
   // Wizard state
@@ -123,6 +127,8 @@ export const ClientBookingFlow: React.FC = () => {
       source: 'online',
     });
 
+    // Keep the management agenda on the day just booked so the new entry is visible there.
+    setAdminSelectedDate(selectedDate);
     setConfirmedBooking(newAppointment);
     setStep(5);
   };
@@ -131,6 +137,27 @@ export const ClientBookingFlow: React.FC = () => {
     setStep(1);
     setSelectedTime('');
     setConfirmedBooking(null);
+  };
+
+  const handleAddToDeviceCalendar = async () => {
+    try {
+      const shared = await shareICSFile(confirmedBooking!, selectedBarber, selectedServices, config.name);
+      if (!shared) {
+        addToast({
+          type: 'info',
+          title: 'Convite de calendário preparado',
+          description: 'Este navegador não suporta a partilha direta. Descarregámos um ficheiro para abrir no calendário do dispositivo.',
+        });
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+      downloadICSFile(confirmedBooking!, selectedBarber, selectedServices, config.name);
+      addToast({
+        type: 'info',
+        title: 'Convite de calendário preparado',
+        description: 'Não foi possível abrir a partilha. Descarregámos um ficheiro para abrir no calendário do dispositivo.',
+      });
+    }
   };
 
   return (
@@ -818,13 +845,33 @@ export const ClientBookingFlow: React.FC = () => {
                 <span>Enviar Confirmação para o WhatsApp da Barbearia</span>
               </a>
 
-              <button
-                onClick={() => downloadICSFile(confirmedBooking, selectedBarber, selectedServices, config.name)}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-stone-800 hover:bg-stone-700 text-stone-200 font-semibold rounded-xl border border-stone-700 transition-all text-sm"
-              >
-                <CalendarCheck className="w-4 h-4 text-amber-400" />
-                <span>Adicionar ao Calendário (Google / Apple / Outlook)</span>
-              </button>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <a
+                  href={getGoogleCalendarUrl(
+                    confirmedBooking,
+                    selectedBarber,
+                    selectedServices,
+                    config.name,
+                    [config.address, config.city].filter(Boolean).join(', ')
+                  )}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-stone-700 bg-stone-800 px-4 py-3 text-sm font-semibold text-stone-100 transition-all hover:bg-stone-700"
+                >
+                  <CalendarCheck className="h-4 w-4 text-amber-400" />
+                  Google Calendar
+                </a>
+                <button
+                  onClick={handleAddToDeviceCalendar}
+                  className="flex items-center justify-center gap-2 rounded-xl border border-stone-700 bg-stone-800 px-4 py-3 text-sm font-semibold text-stone-100 transition-all hover:bg-stone-700"
+                >
+                  <CalendarCheck className="h-4 w-4 text-amber-400" />
+                  Calendário do telemóvel
+                </button>
+              </div>
+              <p className="text-center text-[11px] leading-relaxed text-stone-500">
+                O Google Calendar abre a marcação pronta a guardar. No telemóvel, escolha a app de calendário no menu de partilha.
+              </p>
 
               <button
                 onClick={handleResetFlow}
