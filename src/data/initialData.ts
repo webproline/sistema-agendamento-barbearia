@@ -8,6 +8,7 @@ export const DEFAULT_BARBER_PHOTOS: Record<string, string> = {
   'barber-diogo': `${publicBaseUrl}images/barber_diogo_avatar_1791388801161.jpg`,
   'barber-tiago': `${publicBaseUrl}images/barber_tiago_avatar_1791388856731.jpg`,
 };
+export const DEFAULT_INSTAGRAM_HANDLE = 'barbearia_modelo';
 
 export const INITIAL_SERVICES: Service[] = [
   {
@@ -142,7 +143,7 @@ export const INITIAL_BARBERS: Barber[] = [
 export const INITIAL_CONFIG: BarbershopConfig = {
   name: 'Barbearia Modelo',
   subtitle: 'Cortes e serviço de barbearia em Braga.',
-  instagramHandle: '',
+  instagramHandle: DEFAULT_INSTAGRAM_HANDLE,
   instagramUrl: '',
   phone: '',
   address: 'Rua Exemplo, nº 10',

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useBarbershop } from '../../context/BarbershopContext';
+import { DEFAULT_INSTAGRAM_HANDLE } from '../../data/initialData';
 import {
   Settings,
   Store,
@@ -22,7 +23,7 @@ export const SettingsView: React.FC = () => {
   const [phone, setPhone] = useState(config.phone);
   const [address, setAddress] = useState(config.address);
   const [city, setCity] = useState(config.city);
-  const [instagramHandle, setInstagramHandle] = useState(config.instagramHandle);
+  const [instagramHandle, setInstagramHandle] = useState(config.instagramHandle || DEFAULT_INSTAGRAM_HANDLE);
   const [instagramUrl, setInstagramUrl] = useState(config.instagramUrl);
   const [weekdaysHours, setWeekdaysHours] = useState(config.openingHours.weekdays);
   const [slotInterval, setSlotInterval] = useState(config.slotIntervalMin);
@@ -154,7 +155,7 @@ export const SettingsView: React.FC = () => {
                 <input
                   type="text"
                   value={instagramHandle}
-                  placeholder="Deixe em branco para ocultar na demonstração"
+                  placeholder="Ex.: barbearia_modelo"
                   onChange={e => setInstagramHandle(e.target.value)}
                   className="w-full bg-stone-950 border border-stone-800 rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-amber-500"
                 />
@@ -168,7 +169,7 @@ export const SettingsView: React.FC = () => {
               <input
                 type="url"
                 value={instagramUrl}
-                placeholder="Deixe em branco para ocultar na demonstração"
+                placeholder="Adicione o link para tornar o @ clicável"
                 onChange={e => setInstagramUrl(e.target.value)}
                 className="w-full bg-stone-950 border border-stone-800 rounded-xl py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500"
               />

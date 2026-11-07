@@ -1,5 +1,6 @@
 import React from 'react';
 import { useBarbershop } from '../../context/BarbershopContext';
+import { DEFAULT_INSTAGRAM_HANDLE } from '../../data/initialData';
 import {
   Calendar,
   LayoutDashboard,
@@ -17,6 +18,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
   const { activeView, setActiveView, config, toasts, removeToast } = useBarbershop();
+  const instagramHandle = config.instagramHandle || DEFAULT_INSTAGRAM_HANDLE;
 
   return (
     <>
@@ -117,17 +119,22 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
               </button>
             )}
 
-            {config.instagramHandle && config.instagramUrl && (
+            {config.instagramUrl ? (
               <a
                 href={config.instagramUrl}
                 target="_blank"
                 rel="noreferrer"
-                title={`Instagram @${config.instagramHandle}`}
+                title={`Instagram @${instagramHandle}`}
                 className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-stone-300 hover:text-white bg-stone-900/80 hover:bg-stone-800 border border-stone-800 rounded-lg transition-colors whitespace-nowrap"
               >
                 <Instagram className="w-3.5 h-3.5 text-pink-400" />
-                <span className="hidden md:inline">@{config.instagramHandle}</span>
+                <span className="hidden md:inline">@{instagramHandle}</span>
               </a>
+            ) : (
+              <span title="Exemplo de identificador para Instagram" className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-stone-400 bg-stone-900/80 border border-stone-800 rounded-lg whitespace-nowrap">
+                <Instagram className="w-3.5 h-3.5 text-pink-400" />
+                <span className="hidden md:inline">@{instagramHandle}</span>
+              </span>
             )}
           </div>
 

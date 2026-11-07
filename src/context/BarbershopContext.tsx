@@ -14,6 +14,7 @@ import {
   INITIAL_CONFIG,
   INITIAL_CLIENTS,
   DEFAULT_BARBER_PHOTOS,
+  DEFAULT_INSTAGRAM_HANDLE,
   getInitialAppointments,
 } from '../data/initialData';
 import {
@@ -143,7 +144,7 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       ...savedConfig,
       name: oldBusinessName ? INITIAL_CONFIG.name : savedConfig.name,
       phone: oldInstagram || oldBusinessName || oldSamplePhone ? '' : savedConfig.phone,
-      instagramHandle: oldInstagram ? '' : savedConfig.instagramHandle,
+      instagramHandle: oldInstagram ? DEFAULT_INSTAGRAM_HANDLE : savedConfig.instagramHandle,
       instagramUrl: oldInstagram ? '' : savedConfig.instagramUrl,
       whatsappMessageTemplate: oldTemplate
         ? savedConfig.whatsappMessageTemplate.replace(/barbearia\s+(?:d\.?\s*pedro\s*v|exemplo)/gi, INITIAL_CONFIG.name)

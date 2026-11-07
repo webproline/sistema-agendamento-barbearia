@@ -7,6 +7,7 @@ import { ClientBookingFlow } from './components/client/ClientBookingFlow';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { QuickBookingModal } from './components/admin/QuickBookingModal';
 import { ExperienceChooser } from './components/common/ExperienceChooser';
+import { DEFAULT_INSTAGRAM_HANDLE } from './data/initialData';
 import {
   Instagram,
   MapPin,
@@ -20,6 +21,7 @@ const MainContent: React.FC = () => {
   const { activeView, setActiveView, config } = useBarbershop();
   const [isQuickBookingOpen, setIsQuickBookingOpen] = useState(false);
   const contactUrl = getContactUrl();
+  const instagramHandle = config.instagramHandle || DEFAULT_INSTAGRAM_HANDLE;
 
   return (
     <div className="min-h-screen flex flex-col bg-stone-950 text-stone-100 selection:bg-amber-500 selection:text-black">
@@ -81,7 +83,7 @@ const MainContent: React.FC = () => {
               <Clock className="w-3 h-3 text-stone-500" />
               Seg - Sáb: {config.openingHours.weekdays}
             </span>
-            {config.instagramHandle && config.instagramUrl && (
+            {config.instagramUrl ? (
               <a
                 href={config.instagramUrl}
                 target="_blank"
@@ -89,8 +91,13 @@ const MainContent: React.FC = () => {
                 className="flex items-center gap-1.5 text-pink-400 hover:underline"
               >
                 <Instagram className="w-3 h-3" />
-                <span>@{config.instagramHandle}</span>
+                <span>@{instagramHandle}</span>
               </a>
+            ) : (
+              <span className="flex items-center gap-1.5 text-stone-500" title="Exemplo de identificador para Instagram">
+                <Instagram className="w-3 h-3 text-pink-400" />
+                <span>@{instagramHandle}</span>
+              </span>
             )}
           </div>
 
