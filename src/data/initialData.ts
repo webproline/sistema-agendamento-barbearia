@@ -146,7 +146,7 @@ export const INITIAL_CONFIG: BarbershopConfig = {
   instagramHandle: DEFAULT_INSTAGRAM_HANDLE,
   instagramUrl: '',
   phone: '',
-  address: 'Morada de demonstração',
+  address: 'Rua Exemplo, nº 10',
   city: '',
   postalCode: '',
   openingHours: {
