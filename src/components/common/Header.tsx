@@ -61,7 +61,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
           {/* Zone 1: Single text element wordmark */}
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setActiveView('client')}
+              onClick={() => setActiveView('welcome')}
               className="flex items-center gap-2.5 text-left group"
             >
               <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center text-stone-950 shadow-inner group-hover:from-amber-500 group-hover:to-amber-700 transition-colors">
@@ -89,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
               }`}
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>Marcar Online</span>
+              <span>Área do Cliente</span>
             </button>
 
             <button
@@ -101,7 +101,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickBooking }) => {
               }`}
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
-              <span>Painel de Gestão (PC / Balcão)</span>
+              <span>Painel de Gestão</span>
             </button>
           </nav>
 

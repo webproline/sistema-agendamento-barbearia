@@ -6,16 +6,13 @@ import { getContactUrl } from './data/contact';
 import { ClientBookingFlow } from './components/client/ClientBookingFlow';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { QuickBookingModal } from './components/admin/QuickBookingModal';
+import { ExperienceChooser } from './components/common/ExperienceChooser';
 import {
-  Calendar,
-  LayoutDashboard,
   Instagram,
   MapPin,
   Phone,
   Clock,
   Scissors,
-  CheckCircle2,
-  ExternalLink,
   MessageCircle,
 } from 'lucide-react';
 
@@ -28,47 +25,51 @@ const MainContent: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-stone-950 text-stone-100 selection:bg-amber-500 selection:text-black">
       <DemoBanner />
 
-      {/* Top Header */}
-      <Header onOpenQuickBooking={() => setIsQuickBookingOpen(true)} />
+      {activeView === 'welcome' ? (
+        <main className="flex-1">
+          <ExperienceChooser shopName={config.name} onChoose={setActiveView} />
+        </main>
+      ) : (
+        <>
+          <Header onOpenQuickBooking={() => setIsQuickBookingOpen(true)} />
 
-      {/* Main View Area */}
-      <main className="flex-1">
-        {activeView === 'client' ? (
-          <ClientBookingFlow />
-        ) : (
-          <AdminDashboard
-            isQuickBookingOpen={isQuickBookingOpen}
-            setIsQuickBookingOpen={setIsQuickBookingOpen}
-          />
-        )}
-      </main>
+          <main className="flex-1">
+            {activeView === 'client' ? (
+              <ClientBookingFlow />
+            ) : (
+              <AdminDashboard
+                isQuickBookingOpen={isQuickBookingOpen}
+                setIsQuickBookingOpen={setIsQuickBookingOpen}
+              />
+            )}
+          </main>
 
-      {/* Persistent floating switcher helper for presentation */}
-      <div className="fixed bottom-4 left-4 z-40 hidden sm:flex items-center gap-2 bg-stone-900/90 backdrop-blur-md p-1.5 rounded-2xl border border-stone-800 shadow-2xl">
-        <span className="text-[11px] font-medium text-stone-400 pl-2">Pré-visualização:</span>
-        <button
-          onClick={() => setActiveView('client')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-            activeView === 'client'
-              ? 'bg-amber-500 text-stone-950 font-bold'
-              : 'text-stone-300 hover:text-white hover:bg-stone-800'
-          }`}
-        >
-          Vista do Cliente (Marcar)
-        </button>
-        <button
-          onClick={() => setActiveView('admin')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-            activeView === 'admin'
-              ? 'bg-amber-500 text-stone-950 font-bold'
-              : 'text-stone-300 hover:text-white hover:bg-stone-800'
-          }`}
-        >
-          Vista PC Barbearia (Gestão)
-        </button>
-      </div>
+          <div className="fixed bottom-4 left-4 z-40 hidden sm:flex items-center gap-2 bg-stone-900/90 backdrop-blur-md p-1.5 rounded-2xl border border-stone-800 shadow-2xl">
+            <span className="text-[11px] font-medium text-stone-400 pl-2">Pré-visualização:</span>
+            <button
+              onClick={() => setActiveView('client')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                activeView === 'client'
+                  ? 'bg-amber-500 text-stone-950 font-bold'
+                  : 'text-stone-300 hover:text-white hover:bg-stone-800'
+              }`}
+            >
+              Área do Cliente
+            </button>
+            <button
+              onClick={() => setActiveView('admin')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                activeView === 'admin'
+                  ? 'bg-amber-500 text-stone-950 font-bold'
+                  : 'text-stone-300 hover:text-white hover:bg-stone-800'
+              }`}
+            >
+              Painel de Gestão
+            </button>
+          </div>
+        </>
+      )}
 
-      {/* Global Quick Booking Modal if triggered from header in client view */}
       {activeView === 'client' && (
         <QuickBookingModal
           isOpen={isQuickBookingOpen}
@@ -76,9 +77,11 @@ const MainContent: React.FC = () => {
         />
       )}
 
-      {/* Footer */}
-      <footer className="border-t border-stone-900 bg-stone-950/95 py-8 px-4 sm:px-6 lg:px-8 text-xs text-stone-500">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-stone-900 bg-stone-950/95 py-6 px-4 sm:px-6 lg:px-8 text-xs text-stone-500">
+        {activeView === 'welcome' ? (
+          <p className="text-center">Demonstração do sistema de marcações e gestão · Dados fictícios</p>
+        ) : (
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded bg-amber-500/20 text-amber-500 flex items-center justify-center">
               <Scissors className="w-3.5 h-3.5 -rotate-45" />
@@ -124,7 +127,8 @@ const MainContent: React.FC = () => {
               </a>
             )}
           </div>
-        </div>
+          </div>
+        )}
       </footer>
     </div>
   );

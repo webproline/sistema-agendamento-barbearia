@@ -53,8 +53,8 @@ interface BarbershopContextType {
   config: BarbershopConfig;
   selectedDate: string;
   setSelectedDate: (date: string) => void;
-  activeView: 'client' | 'admin';
-  setActiveView: (view: 'client' | 'admin') => void;
+  activeView: 'welcome' | 'client' | 'admin';
+  setActiveView: (view: 'welcome' | 'client' | 'admin') => void;
   adminTab: 'agenda' | 'reminders' | 'clients' | 'services' | 'team' | 'analytics' | 'settings';
   setAdminTab: (tab: 'agenda' | 'reminders' | 'clients' | 'services' | 'team' | 'analytics' | 'settings') => void;
   
@@ -138,7 +138,7 @@ export const BarbershopProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   });
 
   const [selectedDate, setSelectedDate] = useState<string>(getTodayDateString());
-  const [activeView, setActiveView] = useState<'client' | 'admin'>('client');
+  const [activeView, setActiveView] = useState<'welcome' | 'client' | 'admin'>('welcome');
   const [adminTab, setAdminTab] = useState<'agenda' | 'reminders' | 'clients' | 'services' | 'team' | 'analytics' | 'settings'>('agenda');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
