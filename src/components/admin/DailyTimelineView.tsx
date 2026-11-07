@@ -52,6 +52,7 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
   for (let min = 9 * 60; min <= 19.5 * 60; min += 30) {
     timeSlots.push(minutesToTime(min));
   }
+  const timelineSlotHeight = 68;
 
   const todayStr = getTodayDateString();
 
@@ -205,7 +206,7 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
               return (
                 <div
                   key={time}
-                  className="grid grid-cols-[70px_repeat(3,minmax(260px,1fr))] min-h-[68px]"
+                  className="grid grid-cols-[70px_repeat(3,minmax(260px,1fr))] h-[68px]"
                 >
                   {/* Time label */}
                   <div className="p-2 border-r border-stone-800/80 bg-stone-950/40 text-[11px] font-mono font-medium text-stone-400 flex items-start justify-center pt-3">
@@ -217,11 +218,14 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
                     // Find if there is an appointment starting at this time or spanning this time
                     const targetApp = dayAppointments.find(a => {
                       if (a.barberId !== barber.id) return false;
-                      const aStart = timeToMinutes(a.time);
-                      const aEnd = aStart + a.durationMin;
-                      const slotMin = timeToMinutes(time);
                       return a.time === time; // We anchor card on starting slot
                     });
+                    const appointmentHeight = targetApp
+                      ? Math.max(
+                          timelineSlotHeight,
+                          (targetApp.durationMin / 30) * timelineSlotHeight
+                        ) - 12
+                      : undefined;
 
                     // Check if it's during lunch
                     const slotMin = timeToMinutes(time);
@@ -240,6 +244,14 @@ export const DailyTimelineView: React.FC<DailyTimelineViewProps> = ({
                       >
                         {targetApp ? (
                           <div
+                            style={{
+                              position: 'absolute',
+                              top: '6px',
+                              left: '6px',
+                              right: '6px',
+                              height: `${appointmentHeight}px`,
+                              zIndex: 10,
+                            }}
                             className={`p-2.5 rounded-xl border transition-all text-xs flex flex-col justify-between h-full shadow-md ${
                               targetApp.status === 'concluido'
                                 ? 'bg-stone-950 border-emerald-600/40 text-stone-300'
